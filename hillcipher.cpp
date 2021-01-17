@@ -1,9 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
-string multiplyandgiveciphertext(int textmatrix[][3], int keymatrix[3][3],int numofcols )
+double result[100][3]={0};
+
+string multiplyandgivetext(double textmatrix[][3], double keymatrix[3][3],int numofcols )
 {
     int r1=3,c1=3,r2=3,c2=numofcols;
-    int result[3][numofcols]={0};
+    
     for(int i=0;i<r1;i++)
     {
         for(int j=0;j<c2;j++)
@@ -23,9 +25,49 @@ string multiplyandgiveciphertext(int textmatrix[][3], int keymatrix[3][3],int nu
     return ciphertext;
 
 }
-string hillencrypt(string text,string key)
+string decryptciphertext(double keymatrix[3][3],int cols)
 {
-    int keymatrix[3][3],textmatrix[100][3];
+    double detvalue=0;
+    detvalue += keymatrix[0][0]*((keymatrix[1][1]*keymatrix[2][2])-(keymatrix[2][1]*keymatrix[1][2]));
+    detvalue -= keymatrix[0][1]*((keymatrix[1][0]*keymatrix[2][2])-(keymatrix[2][0]*keymatrix[1][2]));
+    detvalue += keymatrix[0][2]*((keymatrix[1][0]*keymatrix[2][1])-(keymatrix[2][0]*keymatrix[1][1]));
+    cout<<"detvalue="<<detvalue<<endl;
+    double matrixofcofactors[3][3];
+    matrixofcofactors[0][0] = +(keymatrix[1][1]*keymatrix[2][2])-(keymatrix[2][1]*keymatrix[1][2]);
+    matrixofcofactors[0][1] = -(keymatrix[1][0]*keymatrix[2][2])-(keymatrix[2][0]*keymatrix[1][2]);
+    matrixofcofactors[0][2] = +(keymatrix[1][0]*keymatrix[2][1])-(keymatrix[2][0]*keymatrix[1][1]);
+    matrixofcofactors[1][0] = -(keymatrix[0][1]*keymatrix[2][2])-(keymatrix[2][1]*keymatrix[0][2]);
+    matrixofcofactors[1][1] = +(keymatrix[0][0]*keymatrix[2][2])-(keymatrix[2][0]*keymatrix[0][2]);
+    matrixofcofactors[1][2] = -(keymatrix[0][0]*keymatrix[2][1])-(keymatrix[2][0]*keymatrix[0][1]);
+    matrixofcofactors[2][0] = +(keymatrix[0][1]*keymatrix[1][2])-(keymatrix[1][1]*keymatrix[0][2]);
+    matrixofcofactors[2][1] = -(keymatrix[0][0]*keymatrix[1][2])-(keymatrix[1][0]*keymatrix[0][2]);
+    matrixofcofactors[2][2] = +(keymatrix[0][0]*keymatrix[1][1])-(keymatrix[1][0]*keymatrix[0][1]);
+    double adjointmatrix[3][3];
+    for(int i=0;i<3;i++)
+    {
+        for(int j=0;j<3;j++)
+            adjointmatrix[i][j]=matrixofcofactors[j][i];
+    }
+    double inversematrix[3][3];
+    for(int i=0;i<3;i++)
+    {
+        for(int j=0;j<3;j++)
+        {
+            inversematrix[i][j]=double(adjointmatrix[i][j]/detvalue);
+            cout<<adjointmatrix[i][j]<<" ";
+        }
+        cout<<endl;
+            
+
+    }
+
+
+    return multiplyandgivetext(result,inversematrix,cols);
+
+}
+void hillcypher(string text,string key)
+{
+    double keymatrix[3][3],textmatrix[100][3];
     int it=0;
     for(int i=0;i<3;i++)
     {
@@ -67,11 +109,15 @@ string hillencrypt(string text,string key)
             }
         }
     }
-    return multiplyandgiveciphertext(textmatrix,keymatrix,numofcols);
+    string encryptedmessage = multiplyandgivetext(textmatrix,keymatrix,numofcols);
+    cout<<"encrypted message = "<<encryptedmessage<<endl;
+    string decryptedmessage = decryptciphertext(keymatrix,text.length()/3);
+    cout<<"decrypted message = "<<decryptedmessage<<endl;
 }
 int main()
 {
     string key;
+
     cout<<"Enter a key of length 9"<<endl;
     cin>>key;
     if(key.length() == 9)
@@ -81,8 +127,7 @@ int main()
         cin>>text;
         if(text.length()%3 == 0)
         {
-            string encrypted = hillencrypt(text,key);
-            cout<<"encrypted message = "<<encrypted<<endl;
+            hillcypher(text,key);
         }
         else
         {
