@@ -32,9 +32,9 @@ void diffiehelman(int key)
     int pa,pb;
     do
     {
-        cout<<"Enter private key for user-a: (Should be less than key) ";
+        cout<<"Enter private key for user-a: (Should be less than "<<key<<" ) ";
         cin>>pa;
-        cout<<"Enter private key for user-b: (Should be less than key) ";
+        cout<<"Enter private key for user-b: (Should be less than "<<key<<" ) ";
         cin>>pb;
         if(pa >= key || pb >=key)
             conditionfailed = true;
