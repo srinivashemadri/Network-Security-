@@ -2,7 +2,6 @@
 #define ll long long
 using namespace std;
 double result[100][3]={0};
-
 string multiplyandgivetext(double textmatrix[][3], double keymatrix[3][3],int numofcols )
 {
     int r1=3,c1=3,r2=3,c2=numofcols;

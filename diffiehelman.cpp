@@ -1,8 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 int findprimitiveroot(int p)
-{
-    int count[p];
+{    int count[p];
     for(int i=2;i<p;i++)
     {
         memset(count,0,sizeof(count));

@@ -1,7 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 char matrix[100][100];
-
 void fillmatrix(string text,int key)
 {
     

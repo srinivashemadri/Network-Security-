@@ -4,7 +4,6 @@ using namespace std;
 vector<int> keyarray,k1,k2,p10order,p8order;
 vector<int> IP,EP,p4;
 int s0[4][4],s1[4][4];
-
 void print(string msg,vector<int> arr,int size)
 {
     cout<<msg;

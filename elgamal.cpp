@@ -2,8 +2,7 @@
 #define ll long long
 using namespace std;
 ll int findprimitiveroot(ll int p)
-{
-    int count[p];
+{    int count[p];
     for(int i=2;i<p;i++)
     {
         memset(count,0,sizeof(count));

@@ -2,8 +2,7 @@
 using namespace std;
 char matrix[5][5];
 void generatekeytable(string key)
-{
-    bool visited[26];
+{    bool visited[26];
     memset(visited,false,sizeof(visited));
     int r=0,c=0;
     for(int i=0;i<key.length();i++)
